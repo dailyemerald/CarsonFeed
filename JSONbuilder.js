@@ -1,7 +1,10 @@
-var request = require('request');
+var request = require('request'),
+    fs = require('fs');
 
 function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
 }
 
 request('http://housing.uoregon.edu/dining/todaysmenu.php?d=1335078000&lid=1', function (error, response, body) {
@@ -16,33 +19,43 @@ request('http://housing.uoregon.edu/dining/todaysmenu.php?d=1335078000&lid=1', f
 
         var $ = require('jquery').create(window);
 
-		var menu = new Object();
-		var currentSection = "";
+        var menu = new Object();
+        var currentSection = "";
 
         $(".minorheader,.text").each(function (index) {
-			try {
-				var itemClass = $(this).attr("class")
-				var itemText = $(this).html();
+            try {
+                var itemClass = $(this).attr("class")
+                var itemText = $(this).html();
 
-				if (itemClass == "minorheader") {
-					currentSection = toTitleCase(itemText);
-					menu[currentSection] = [];
-				}
+                if (itemClass == "minorheader") {
+                    currentSection = toTitleCase(itemText);
+                    menu[currentSection] = [];
+                }
 
-				if (itemClass == "text" && currentSection != "") {
-					console.log(menu, menu[currentSection]);
-					menu[currentSection].push(itemText);
-				} 
-        	} catch (e) {
-				console.log("Parse error!", e)
-			}
+                if (itemClass == "text" && currentSection != "") {
+                    console.log(menu, menu[currentSection]);
+                    menu[currentSection].push(itemText);
+                }
+            } catch (e) {
+                console.log("Parse error!", e)
+            }
 
-			console.log(index, itemClass, itemText);
+
+
+            console.log(index, itemClass, itemText);
         });
-		delete menu["default"];
-		console.log(menu);
+
+        console.log(menu);
+
+        fs.writeFile("./public_html/json/menu.json", JSON.stringify(menu), function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("The file was saved!");
+            }
+        });
 
     } else {
-    	console.log("Error getting page.");
+        console.log("Error getting page.");
     }
 });
