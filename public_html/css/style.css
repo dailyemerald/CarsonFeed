@@ -5,7 +5,7 @@ body,ul,li {
 }
 
 body {
-	font-size:12px;
+	font-size:13px;
 	-webkit-user-select:none;
     -webkit-text-size-adjust:none;
 	font-family:helvetica;
@@ -18,9 +18,9 @@ body {
 	height:45px;
 	line-height:45px;
 	background-color:#d51875;
-	background-image:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #fe96c9), color-stop(0.05, #d51875), color-stop(1, #7b0a2e));
-	background-image:-moz-linear-gradient(top, #fe96c9, #d51875 5%, #7b0a2e);
-	background-image:-o-linear-gradient(top, #fe96c9, #d51875 5%, #7b0a2e);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #999), color-stop(0.02, #666), color-stop(1, #222));
+	background-image:-moz-linear-gradient(top, #999, #666 2%, #222);
+	background-image:-o-linear-gradient(top, #999, #666 2%, #222);
 	padding:0;
 	color:#eee;
 	font-size:20px;
@@ -68,15 +68,21 @@ body {
 	padding:0;
 	margin:0;
 	width:100%;
-	text-align:left;
+	text-align:center;
 }
 
 #scroller li {
 	padding:0 10px;
-	height:40px;
-	line-height:40px;
+	height:30px;
+	line-height:30px;
 	border-bottom:1px solid #ccc;
 	border-top:1px solid #fff;
 	background-color:#fafafa;
 	font-size:14px;
+}
+
+#thelist li.menuHeader {
+	background: #333;
+	color: #EEE;
+	font-size: 14px;
 }

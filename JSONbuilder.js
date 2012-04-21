@@ -21,6 +21,7 @@ request('http://housing.uoregon.edu/dining/todaysmenu.php?d=1335078000&lid=1', f
 
         var menu = new Object();
         var currentSection = "";
+		var menuHeaders = [];
 
         $(".minorheader,.text").each(function (index) {
             try {
@@ -28,6 +29,7 @@ request('http://housing.uoregon.edu/dining/todaysmenu.php?d=1335078000&lid=1', f
                 var itemText = $(this).html();
 
                 if (itemClass == "minorheader") {
+                	menuHeaders.push(toTitleCase(itemText));
                     currentSection = toTitleCase(itemText);
                     menu[currentSection] = [];
                 }
@@ -42,12 +44,13 @@ request('http://housing.uoregon.edu/dining/todaysmenu.php?d=1335078000&lid=1', f
 
 
 
-            console.log(index, itemClass, itemText);
+            //console.log(index, itemClass, itemText);
         });
 
         console.log(menu);
+        console.log(menuHeaders);
 
-        fs.writeFile("./public_html/json/menu.json", JSON.stringify(menu), function (err) {
+        fs.writeFile("./public_html/json/menu.json", "MenuCallback8476("+JSON.stringify(menu)+");", function (err) {
             if (err) {
                 console.log(err);
             } else {

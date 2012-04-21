@@ -3,34 +3,42 @@ var myScroll,
 	pullUpEl, pullUpOffset,
 	generatedCount = 0;
 
-function pullDownAction () {
-	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-		var el, li, i;
-		el = document.getElementById('thelist');
+function fetchData() {
+	$.ajaxJSONP({
+	  url: 'http://euler.radianphoto.com/json/menu.json'
+	});
+}
 
-		for (i=0; i<3; i++) {
-			li = document.createElement('li');
-			li.innerText = 'Generated row ' + (++generatedCount);
-			el.insertBefore(li, el.childNodes[0]);
+var menuHeaders = [ 'Brunch',
+  					'Brunch Specialty Bar',
+  					'Soup Du Jour',
+  					'Salad Bar',
+  					'Dinner' ];
+
+function processData(menu) {
+	console.log('in processData');
+	$("#thelist").html("");
+	menuHeaders.forEach(function(menuHeader) {
+		if (menu[menuHeader]) {
+			$("#thelist").append("<li class='menuHeader'><b>"+menuHeader+"</b></li>");
+			menu[menuHeader].forEach(function(menuItem) {
+				$("#thelist").append("<li class='menuItem'>"+menuItem+"</li>");
+			});
 		}
-		
-		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+	});
+	myScroll.refresh();
+}
+
+function MenuCallback8476(data) {
+	processData(data);
+}
+
+function pullDownAction () {
+	fetchData();
 }
 
 function pullUpAction () {
-	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-		var el, li, i;
-		el = document.getElementById('thelist');
-
-		for (i=0; i<3; i++) {
-			li = document.createElement('li');
-			li.innerText = 'Generated row ' + (++generatedCount);
-			el.appendChild(li, el.childNodes[0]);
-		}
-		
-		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+	fetchData();
 }
 
 function loaded() {
